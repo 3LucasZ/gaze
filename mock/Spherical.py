@@ -8,15 +8,15 @@ class Spherical:
         self.az=az
         self.el=el
 
-    def __add__(self, o: Spherical):
-        u = self.toVector3()
-        v = o.toVector3()
+    def __add__(self, o):
+        u: Vector3  = self.toVector3()
+        v: Vector3 = o.toVector3()
 
     def toVector3(self):
-        x = self.r*sin(self.el)*cos(self.az)
-        y = self.r*sin(self.el)*sin(self.az)
-        z = self.r*cos(self.el)
-        return Vector3(x,y,x)
+        x: float = self.r*sin(self.el)*cos(self.az)
+        y: float = self.r*sin(self.el)*sin(self.az)
+        z: float = self.r*cos(self.el)
+        return Vector3(x,y,z)
     
     def __str__(self):
         return("{"+str(round(self.r,5))+","+str(round(self.az,5))+","+str(round(self.el,5))+"}")
