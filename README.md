@@ -1,2 +1,3 @@
-x,y horizontal plane
-z vertical axis
+- x,y horizontal plane
+- z vertical axis
+- https://keisan.casio.com/exec/system/1359533867

@@ -10,15 +10,25 @@ class Vector3:
 
     def __add__(self, o: 'Vector3') -> 'Vector3':
         return Vector3(self.x+o.x,self.y+o.y,self.z+o.z)
+    
+    def __sub__(self, o: 'Vector3') -> 'Vector3':
+        return Vector3(self.x-o.x,self.y-o.y,self.z-o.z)
+    
+    def __mul__(self, o: float) -> 'Vector3':
+        return Vector3(self.x*o,self.y*o,self.z*o)
+    
+    def __rmul__(self, o: float) -> 'Vector3':
+        return Vector3(self.x*o,self.y*o,self.z*o)
 
     def __str__(self) -> str:
-        return "{"+str(round(self.x,5))+","+str(round(self.y,5))+","+str(round(self.z,5))+"}"
+        return "{x:"+str(round(self.x,5))+",y:"+str(round(self.y,5))+",z:"+str(round(self.z,5))+"}"
     
     def __eq__(self, o: 'Vector3') -> bool:
         return eq(self.x,o.x) and eq(self.y, o.y) and eq(self.z, o.z)
     
     def toSpherical(self) -> 'Spherical':
         r: float = sqrt(self.x*self.x+self.y*self.y+self.z*self.z)
+        if (eq(r,0)): return Spherical(0,0,0)
         az: float = atan2(self.y,self.x)
         el: float = acos(self.z/r)
         return Spherical(r,az,el)
@@ -34,8 +44,13 @@ class Spherical:
         v: Vector3 = o.toVector3()
         return (u+v).toSpherical()
     
+    def __sub__(self, o) -> 'Spherical':
+        u: Vector3  = self.toVector3()
+        v: Vector3 = o.toVector3()
+        return (u-v).toSpherical()
+    
     def __str__(self) -> str:
-        return("{"+str(round(self.r,5))+","+str(round(self.az,5))+","+str(round(self.el,5))+"}")
+        return("{r:"+str(round(self.r,5))+",az:"+str(round(self.az,5))+",el"+str(round(self.el,5))+"}")
     
     def __eq__(self, o: 'Spherical') -> bool:
         return eq(self.r,o.r) and eq(self.az,o.az) and eq(self.el,o.el)
