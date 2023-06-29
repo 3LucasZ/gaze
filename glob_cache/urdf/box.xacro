@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="test">
+  <!-- base -->
+  <link name="base_link">
+    <inertial>
+        <mass value="1.14395"/>
+        <inertia ixx="0.095329" ixy="0" ixz="0" iyy="0.381317" iyz="0" izz="0.476646"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <box size="2.0 1.0 0.5"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="2.0 1.0 0.5"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- wheels -->
+  <xacro:macro name="wheel" params="name x y">
+    <link name="${name}_link">
+      <inertial>
+        <mass value="1"/>
+        <inertia ixx="0.043333" ixy="0" ixz="0" iyy="0.043333" iyz="0" izz="0.08"/>
+      </inertial>
+      <visual>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <geometry>
+          <cylinder radius="0.4" length="0.2"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <geometry>
+          <cylinder radius="0.4" length="0.2"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${name}_joint" type="continuous">
+      <origin xyz="${x} ${y} 0.0" rpy="1.5707 0.0 0.0"/>
+      <parent link="base_link"/>
+      <child link="${name}_link"/>
+      <axis xyz="0.0 0.0 1.0"/>
+    </joint>
+  </xacro:macro>
+
+  <xacro:wheel name="fl" x="0.5" y="0.6"/>
+  <xacro:wheel name="fr" x="0.5" y="-0.6"/>
+
+  <!-- plugins -->
+  <gazebo>
+  <plugin
+    filename="ignition-gazebo-diff-drive-system"
+    name="ignition::gazebo::systems::DiffDrive">
+    <left_joint>fl_joint</left_joint>
+    <right_joint>fr_joint</right_joint>
+    <wheel_separation>1</wheel_separation>
+    <wheel_radius>0.4</wheel_radius>
+    <odom_publish_frequency>1</odom_publish_frequency>
+    <topic>cmd_vel</topic>
+  </plugin>
+  </gazebo>
+</robot>

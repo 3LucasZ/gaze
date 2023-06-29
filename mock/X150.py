@@ -9,7 +9,7 @@ class X150:
     def update(self, X110rel: Spherical) -> None:
         self.X110rel: Spherical = X110rel
 
-    def getFromWorldFrame(self) -> Spherical:
+    def get_from_world_frame(self) -> Spherical:
         return self.X110pos - self.X110rel
 
     def get_from_X110_frame(self) -> Vector3:

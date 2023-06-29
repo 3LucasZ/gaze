@@ -1,0 +1,1 @@
+xacro box.xacro > box.urdf
