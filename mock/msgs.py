@@ -43,6 +43,9 @@ class Vector3:
         el: float = acos(self.z / r)
         return Spherical(r, az, el)
 
+    def to_arr(self):
+        return [self.x, self.y, self.z]
+
 
 class Spherical:
     def __init__(self, r: float, az: float, el: float) -> "Spherical":
